@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getPeople, catName, pName, pDesc, pBio, pList, pBirthplace } from "../../../../lib/data";
 import { fmtDate } from "../../../../lib/format";
 import { getDict, isLocale, locales } from "../../../../lib/i18n";
+import { alt } from "../../../../lib/seo";
 
 export const dynamicParams = false;
 export const generateStaticParams = () => locales.flatMap(locale => getPeople().map(p => ({ locale, slug: p.slug })));
@@ -11,7 +12,7 @@ type P = { params: Promise<{ locale: string; slug: string }> };
 export async function generateMetadata({ params }: P): Promise<Metadata> {
   const { locale, slug } = await params; const p = getPeople().find(x => x.slug === slug);
   if (!p || !isLocale(locale)) return {};
-  return { title: pName(p, locale), description: pDesc(p, locale) };
+  return { alternates: alt(locale, `/people/${slug}`), title: pName(p, locale), description: pDesc(p, locale) };
 }
 const Group = ({ title, items }: { title: string; items: string[] }) => items.length ? (<><div className="plist-h">{title}</div><ul className="plist">{items.map(i => <li key={i}>{i}</li>)}</ul></>) : null;
 

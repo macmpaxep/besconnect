@@ -3,9 +3,10 @@ import { notFound } from "next/navigation";
 import NewsList from "../../../components/NewsList";
 import { getNews, newsView } from "../../../lib/data";
 import { getDict, isLocale } from "../../../lib/i18n";
+import { alt } from "../../../lib/seo";
 
 type P = { params: Promise<{ locale: string }> };
-export async function generateMetadata({ params }: P): Promise<Metadata> { const { locale } = await params; return { title: isLocale(locale) ? getDict(locale).news.title : "" }; }
+export async function generateMetadata({ params }: P): Promise<Metadata> { const { locale } = await params; return { alternates: alt(locale, "/news"), title: isLocale(locale) ? getDict(locale).news.title : "" }; }
 export default async function Page({ params }: P) {
   const { locale } = await params; if (!isLocale(locale)) notFound();
   const t = getDict(locale), N = getNews();

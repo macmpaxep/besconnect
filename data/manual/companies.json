@@ -6,7 +6,7 @@
     "nameRu": "Özgerim Holding",
     "description": "Investment holding: hedge funds, venture capital, real estate, construction, charity and publishing",
     "descriptionRu": "Инвестиционный холдинг: фонды, недвижимость, строительство",
-    "website": "https://ozgerim-2.vercel.app",
+    "website": "https://ozgerim.com",
     "country": "Kazakhstan",
     "countryRu": "Казахстан",
     "hq": "Almaty / London",
@@ -73,8 +73,8 @@
       ]
     },
     "source": {
-      "name": "ozgerim-2.vercel.app",
-      "url": "https://ozgerim-2.vercel.app"
+      "name": "ozgerim.com",
+      "url": "https://ozgerim.com"
     }
   }
 ]

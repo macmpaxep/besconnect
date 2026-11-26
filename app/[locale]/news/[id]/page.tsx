@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getNews, newsView, relatedCompanies, cName, cCountry } from "../../../../lib/data";
 import { fmtShort } from "../../../../lib/format";
 import { getDict, isLocale, locales } from "../../../../lib/i18n";
+import { alt } from "../../../../lib/seo";
 
 export const dynamicParams = false;
 export const generateStaticParams = () => locales.flatMap(locale => getNews().map(n => ({ locale, id: n.id })));
@@ -11,7 +12,7 @@ type P = { params: Promise<{ locale: string; id: string }> };
 export async function generateMetadata({ params }: P): Promise<Metadata> {
   const { locale, id } = await params; const n = getNews().find(x => x.id === id);
   if (!n || !isLocale(locale)) return {};
-  const v = newsView(n, locale); return { title: v.title, description: v.text };
+  const v = newsView(n, locale); return { alternates: alt(locale, `/news/${id}`), title: v.title, description: v.text };
 }
 
 export default async function Page({ params }: P) {

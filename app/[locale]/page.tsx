@@ -4,6 +4,10 @@ import { getCompanies, getPeople, getNews, catName, cName, pName, cCountry, news
 import { fmtShort } from "../../lib/format";
 import { getDict, isLocale } from "../../lib/i18n";
 import { NewsRow } from "../../components/NewsList";
+import { alt } from "../../lib/seo";
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> { const { locale } = await params; return { alternates: alt(locale) }; }
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params; if (!isLocale(locale)) notFound();

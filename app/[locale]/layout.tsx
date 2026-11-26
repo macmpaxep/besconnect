@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Inter, Source_Serif_4 } from "next/font/google";
 import Nav from "../../components/Nav";
 import { getDict, isLocale, locales } from "../../lib/i18n";
+import { SITE } from "../../lib/seo";
 
 const ui = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-ui", display: "swap" });
 const serif = Source_Serif_4({ subsets: ["latin", "cyrillic"], variable: "--font-serif", display: "swap", axes: ["opsz"] });
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: P): Promise<Metadata> {
   const t = getDict(locale);
   return {
     title: { default: t.siteTitle, template: "%s · BESconnect" }, description: t.siteDesc,
-    alternates: { languages: Object.fromEntries(locales.map(l => [l, `/${l}`])) },
+    metadataBase: new URL(SITE),
   };
 }
 

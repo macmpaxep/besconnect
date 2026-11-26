@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getCompanies, catName, cName, cDesc, cExtract, cCountry, cHq, getCategories } from "../../../../lib/data";
 import { fmtYear, fmtMoney, fmtNum } from "../../../../lib/format";
 import { getDict, isLocale, locales } from "../../../../lib/i18n";
+import { alt } from "../../../../lib/seo";
 
 export const dynamicParams = false;
 export const generateStaticParams = () => locales.flatMap(locale => getCompanies().map(c => ({ locale, slug: c.slug })));
@@ -11,7 +12,7 @@ type P = { params: Promise<{ locale: string; slug: string }> };
 export async function generateMetadata({ params }: P): Promise<Metadata> {
   const { locale, slug } = await params; const c = getCompanies().find(x => x.slug === slug);
   if (!c || !isLocale(locale)) return {};
-  return { title: cName(c, locale), description: cDesc(c, locale) };
+  return { alternates: alt(locale, `/companies/${slug}`), title: cName(c, locale), description: cDesc(c, locale) };
 }
 const Group = ({ title, items }: { title: string; items: string[] }) => items.length ? (<><div className="plist-h">{title}</div><ul className="plist">{items.map(i => <li key={i}>{i}</li>)}</ul></>) : null;
 

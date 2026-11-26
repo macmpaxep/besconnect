@@ -4,9 +4,10 @@ import Catalog from "../../../components/Catalog";
 import { getPeople, getCategories, catName, pName, pDesc, pCountry } from "../../../lib/data";
 import { fmtYear } from "../../../lib/format";
 import { getDict, isLocale } from "../../../lib/i18n";
+import { alt } from "../../../lib/seo";
 
 type P = { params: Promise<{ locale: string }> };
-export async function generateMetadata({ params }: P): Promise<Metadata> { const { locale } = await params; return { title: isLocale(locale) ? getDict(locale).cat.peopleTitle : "" }; }
+export async function generateMetadata({ params }: P): Promise<Metadata> { const { locale } = await params; return { alternates: alt(locale, "/people"), title: isLocale(locale) ? getDict(locale).cat.peopleTitle : "" }; }
 export default async function Page({ params }: P) {
   const { locale } = await params; if (!isLocale(locale)) notFound();
   const t = getDict(locale), P = getPeople(), K = getCategories();
