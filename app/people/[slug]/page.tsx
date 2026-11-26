@@ -7,12 +7,12 @@ export const dynamicParams = false;
 export const generateStaticParams = () => getPeople().map(p => ({ slug: p.slug }));
 type P = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: P): Promise<Metadata> {
-  const p = getPeople().find(x => x.slug === (await params).slug); return { title: p?.name, description: p?.description };
+  const { slug } = await params; const p = getPeople().find(x => x.slug === slug); return { title: p?.name, description: p?.description };
 }
 const Block = ({ title, items }: { title: string; items: string[] }) => items.length ? (<><h3>{title}</h3><ul className="list">{items.map(i => <li key={i}>{i}</li>)}</ul></>) : null;
 
 export default async function Page({ params }: P) {
-  const p = getPeople().find(x => x.slug === (await params).slug); if (!p) notFound();
+  const { slug } = await params; const p = getPeople().find(x => x.slug === slug); if (!p) notFound();
   const paras = p.bio.split(/\n{2,}|\n/).map(s => s.trim()).filter(Boolean).filter(s => !/^=+\s.*\s=+$/.test(s) || true);
   return (<>
     <div className="crumbs"><Link href="/people">Предприниматели</Link> / {catName(p.category)}</div>

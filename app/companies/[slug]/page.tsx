@@ -7,12 +7,12 @@ export const dynamicParams = false;
 export const generateStaticParams = () => getCompanies().map(c => ({ slug: c.slug }));
 type P = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: P): Promise<Metadata> {
-  const c = getCompanies().find(x => x.slug === (await params).slug); return { title: c?.name, description: c?.description };
+  const { slug } = await params; const c = getCompanies().find(x => x.slug === slug); return { title: c?.name, description: c?.description };
 }
 const Block = ({ title, items }: { title: string; items: string[] }) => items.length ? (<><h3>{title}</h3><ul className="list">{items.map(i => <li key={i}>{i}</li>)}</ul></>) : null;
 
 export default async function Page({ params }: P) {
-  const c = getCompanies().find(x => x.slug === (await params).slug); if (!c) notFound();
+  const { slug } = await params; const c = getCompanies().find(x => x.slug === slug); if (!c) notFound();
   const hasPortfolio = c.products.length + c.brands.length + c.subsidiaries.length > 0;
   const similar = getCompanies().filter(x => x.category === c.category && x.slug !== c.slug).slice(0, 6);
   return (<>
