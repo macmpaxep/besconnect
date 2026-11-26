@@ -1,0 +1,55 @@
+[
+  {
+    "id": "manual-aibar-abilov",
+    "slug": "aibar-abilov",
+    "name": "Aibar Abilov",
+    "nameRu": "Айбар Абилов",
+    "description": "President of Özgerim Holding, venture investor",
+    "descriptionRu": "Президент Özgerim Holding, венчурный инвестор",
+    "birth": null,
+    "death": null,
+    "birthplace": null,
+    "birthplaceRu": null,
+    "citizenship": [],
+    "citizenshipRu": [],
+    "education": [],
+    "educationRu": [],
+    "occupations": [
+      "venture investor",
+      "author"
+    ],
+    "occupationsRu": [
+      "венчурный инвестор",
+      "автор"
+    ],
+    "awards": [],
+    "awardsRu": [],
+    "works": [
+      "“Tetrad v kletku” (co-author)"
+    ],
+    "worksRu": [
+      "«Тетрадь в клетку» (соавтор)"
+    ],
+    "owns": [],
+    "photo": "/people/aibar-abilov.jpg",
+    "wikipedia": null,
+    "category": "finance",
+    "summary": "Aibar Abilov is the president of Özgerim Holding and a venture investor.",
+    "bio": "Aibar Abilov is the president of Özgerim Holding and a venture investor. Under his leadership the holding brings together six lines of business: hedge funds, venture investment, real estate investment, construction, charity and book publishing.\n\nHe is building an ecosystem in which capital works to create value, from financial strategies and development to educational and social initiatives.\n\nHe is a co-author of the book “Tetrad v kletku” (“Squared Notebook”), a publication in which personal experience is turned into practical principles for entrepreneurs and for those just starting out.",
+    "bioRu": "Айбар Абилов — президент холдинга Özgerim Holding и венчурный инвестор. Под его руководством холдинг объединяет шесть направлений: хедж-фонды, венчурные инвестиции, инвестиции в недвижимость, строительство, благотворительность и издание книг.\n\nОн выстраивает экосистему, в которой капитал работает на создание ценности: от финансовых стратегий и девелопмента до образовательных и социальных инициатив.\n\nСо-автор книги «Тетрадь в клетку» — издания, в котором личный опыт превращается в практические принципы для предпринимателей и тех, кто только начинает свой путь.",
+    "companies": [
+      {
+        "slug": "ozgerim-holding",
+        "name": "Özgerim Holding",
+        "role": {
+          "ru": "Президент",
+          "en": "President"
+        }
+      }
+    ],
+    "source": {
+      "name": "ozgerim-2.vercel.app",
+      "url": "https://ozgerim-2.vercel.app"
+    }
+  }
+]

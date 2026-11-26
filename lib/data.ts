@@ -6,13 +6,15 @@ export type Company = {
   id: string; slug: string; name: string; nameRu: string | null; description: string; descriptionRu: string | null; website: string | null;
   country: string | null; countryRu: string | null; hq: string | null; hqRu: string | null; founded: string | null; employees: number | null; revenue: number | null;
   industries: string[]; industriesRu: string[]; founders: string[]; founderLinks: { name: string; slug: string | null }[]; ceo: string | null; ceoRu: string | null; parent: string | null; parentRu: string | null;
-  products: string[]; subsidiaries: string[]; brands: string[]; logo: string | null; wikipedia: string | null; extract: string; thumb: string | null; category: string;
+  products: string[]; subsidiaries: string[]; brands: string[]; logo: string | null; wikipedia: string | null; extract: string; extractRu?: string; thumb: string | null; category: string;
+  ceoSlug?: string; projects?: { ru: string[]; en: string[] }; source?: { name: string; url: string };
 };
 export type Person = {
   id: string; slug: string; name: string; nameRu: string | null; description: string; descriptionRu: string | null; birth: string | null; death: string | null;
   birthplace: string | null; birthplaceRu: string | null; citizenship: string[]; citizenshipRu: string[]; education: string[]; educationRu: string[];
   occupations: string[]; occupationsRu: string[]; awards: string[]; awardsRu: string[]; works: string[]; worksRu: string[]; owns: string[];
-  photo: string | null; wikipedia: string | null; summary: string; bio: string; category: string; companies: { slug: string; name: string }[];
+  photo: string | null; wikipedia: string | null; summary: string; bio: string; bioRu?: string; category: string; companies: { slug: string; name: string; role?: { ru: string; en: string } }[];
+  source?: { name: string; url: string };
 };
 export type News = { id: string; title: string; summary: string; link: string; source: string; date: string; image: string | null };
 export type Category = { id: string; name: string; nameEn: string; companies: number; people: number };
@@ -36,9 +38,9 @@ export const cName = (c: Company, l: Locale) => (ru(l) ? c.nameRu || c.name : c.
 export const pName = (p: Person, l: Locale) => (ru(l) ? p.nameRu || p.name : p.name);
 export const cDesc = (c: Company, l: Locale) => (ru(l) ? c.descriptionRu || getRu().companies[c.slug]?.description || c.description : c.description);
 export const pDesc = (p: Person, l: Locale) => (ru(l) ? p.descriptionRu || getRu().people[p.slug]?.description || p.description : p.description);
-export const cExtract = (c: Company, l: Locale) => (ru(l) ? getRu().companies[c.slug]?.extract || c.extract : c.extract);
+export const cExtract = (c: Company, l: Locale) => (ru(l) ? c.extractRu || getRu().companies[c.slug]?.extract || c.extract : c.extract);
 export const pBio = (p: Person, l: Locale) => {
-  const t = ru(l) ? getRu().people[p.slug]?.bio : undefined;
+  const t = ru(l) ? p.bioRu || getRu().people[p.slug]?.bio : undefined;
   return (t || p.bio).split(/\n+/).map(s => s.trim()).filter(Boolean).slice(0, BIO_PARAS);
 };
 export const cCountry = (c: Company, l: Locale) => (ru(l) ? c.countryRu || c.country : c.country);

@@ -19,13 +19,14 @@ export default async function Page({ params }: P) {
   const { locale, slug } = await params; if (!isLocale(locale)) notFound();
   const c = getCompanies().find(x => x.slug === slug); if (!c) notFound();
   const t = getDict(locale), d = t.detail;
-  const hasPortfolio = c.products.length + c.brands.length + c.subsidiaries.length > 0;
+  const projects = c.projects?.[locale] ?? [];
+  const hasPortfolio = c.products.length + c.brands.length + c.subsidiaries.length + projects.length > 0;
   const similar = getCompanies().filter(x => x.category === c.category && x.slug !== c.slug).slice(0, 8);
   const site = c.website?.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
   const rows = ([
     [d.country, cCountry(c, locale)], [d.hq, cHq(c, locale)], [d.founded, c.founded ? fmtYear(c.founded) : null],
     [d.employees, c.employees ? fmtNum(c.employees, locale) : null], [d.revenue, c.revenue ? fmtMoney(c.revenue, locale, { bn: d.mlrd, m: d.mln }) : null],
-    [d.ceo, locale === "ru" ? c.ceoRu || c.ceo : c.ceo], [d.parent, locale === "ru" ? c.parentRu || c.parent : c.parent],
+    [d.ceo, (() => { const n = locale === "ru" ? c.ceoRu || c.ceo : c.ceo; return n && c.ceoSlug ? <Link href={`/${locale}/people/${c.ceoSlug}`}>{n}</Link> : n; })()], [d.parent, locale === "ru" ? c.parentRu || c.parent : c.parent],
     [d.site, c.website ? <a href={c.website} target="_blank" rel="noopener noreferrer">{site}</a> : null],
   ] as [string, React.ReactNode][]).filter(([, v]) => v);
   const sphere = catName(c.category, locale), desc = cDesc(c, locale);
@@ -42,11 +43,12 @@ export default async function Page({ params }: P) {
       <div>
         <section className="sect"><h2 className="h2">{d.about}</h2><div className="read"><p>{cExtract(c, locale)}</p></div></section>
         <section className="sect"><h2 className="h2">{d.portfolio}</h2>
-          {hasPortfolio ? (<><Group title={d.products} items={c.products} /><Group title={d.brands} items={c.brands} /><Group title={d.subs} items={c.subsidiaries} /></>) : <p className="meta">{d.noPortfolio}</p>}
+          {hasPortfolio ? (<><Group title={d.projects} items={projects} />{projects.length > 0 && <p className="meta" style={{ marginTop: 14 }}>{d.selfReported}</p>}<Group title={d.products} items={c.products} /><Group title={d.brands} items={c.brands} /><Group title={d.subs} items={c.subsidiaries} /></>) : <p className="meta">{d.noPortfolio}</p>}
         </section>
         {c.founderLinks.length > 0 && <section className="sect"><h2 className="h2">{d.founders}</h2>
           <table className="rel"><tbody>{c.founderLinks.map(f => <tr key={f.name}><td>{f.slug ? <Link href={`/${locale}/people/${f.slug}`}>{f.name}</Link> : f.name}</td><td>{f.slug ? d.profile : ""}</td></tr>)}</tbody></table>
         </section>}
+        {c.source && <p className="meta">{d.sourceLabel} <a href={c.source.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "underline" }}>{c.source.name}</a></p>}
         {c.wikipedia && <p className="meta">{d.sources} <a href={c.wikipedia} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "underline" }}>Wikipedia</a>, Wikidata.</p>}
       </div>
       <aside>

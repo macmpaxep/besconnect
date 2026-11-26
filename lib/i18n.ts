@@ -34,7 +34,7 @@ const ru = {
     requisites: "Реквизиты", similar: "Другие компании сферы", country: "Страна", hq: "Штаб-квартира", founded: "Основана", employees: "Сотрудники", revenue: "Выручка", ceo: "Руководитель", parent: "Материнская компания", site: "Сайт",
     bio: "Биография", facts: "Краткие сведения", born: "Родился", died: "Умер", birthplace: "Место рождения", citizenship: "Гражданство", education: "Образование", sphere: "Сфера",
     activity: "Деятельность и достижения", occupations: "Род деятельности", awards: "Награды", works: "Известные работы", companiesOf: "Компании", sources: "Источники:", crumbNav: "Навигация",
-    mlrd: "млрд", mln: "млн",
+    mlrd: "млрд", mln: "млн", projects: "Реализованные проекты", selfReported: "Показатели приведены по данным компании и не проверялись независимо.", sourceLabel: "Источник:",
   },
   news: {
     title: "Новости международного бизнеса", sub: "Заголовки ведущих деловых изданий с кратким пересказом и ссылками на оригиналы.", search: "Поиск по новостям", allSources: "Все источники", source: "Источник",
@@ -67,7 +67,7 @@ const en: typeof ru = {
     requisites: "Key facts", similar: "Other companies in this industry", country: "Country", hq: "Headquarters", founded: "Founded", employees: "Employees", revenue: "Revenue", ceo: "Leadership", parent: "Parent company", site: "Website",
     bio: "Biography", facts: "At a glance", born: "Born", died: "Died", birthplace: "Birthplace", citizenship: "Citizenship", education: "Education", sphere: "Industry",
     activity: "Career and achievements", occupations: "Occupations", awards: "Awards", works: "Notable works", companiesOf: "Companies", sources: "Sources:", crumbNav: "Breadcrumb",
-    mlrd: "bn", mln: "m",
+    mlrd: "bn", mln: "m", projects: "Selected projects", selfReported: "Figures are provided by the company and have not been independently verified.", sourceLabel: "Source:",
   },
   news: {
     title: "International business news", sub: "Headlines from leading business publications with a short summary and links to the originals.", search: "Search news", allSources: "All sources", source: "Source",

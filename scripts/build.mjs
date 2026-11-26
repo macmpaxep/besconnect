@@ -19,7 +19,8 @@ const OTHER = ["other", "Прочее"];
 const cat = txt => (CATS.find(([, , re]) => re.test(txt)) || [OTHER[0]])[0];
 const slug = (s, used) => { let b = s.normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "item"; let x = b, i = 2; while (used.has(x)) x = b + "-" + i++; used.add(x); return x; };
 
-const uc = new Set(), up = new Set();
+const manualC = JSON.parse(fs.readFileSync("../data/manual/companies.json")), manualP = JSON.parse(fs.readFileSync("../data/manual/people.json"));
+const uc = new Set(manualC.map(c => c.slug)), up = new Set(manualP.map(p => p.slug));
 const seenName = new Set();
 let C = companies.filter(c => !seenName.has(c.name) && seenName.add(c.name));
 const named = a => a.filter(x => x !== x.toLowerCase());
@@ -30,16 +31,18 @@ const OUT = /politician|president|prime minister|minister|senator|governor|rappe
 const BIZ = /business|entrepreneur|founder|executive|tycoon|industrialist|investor|billionaire|financier|banker|CEO|chairman|magnate|merchant|philanthrop|inventor/i;
 P = P.filter(p => !OUT.test(p.description) || BIZ.test(p.description));
 P.forEach(p => p.slug = slug(p.name, up));
+C.push(...manualC); P.push(...manualP); // hand-curated entries, kept across rebuilds
 const byFounder = {};
 for (const c of C) for (const f of c.founders) (byFounder[f] ||= []).push(c);
 for (const p of P) {
+  if (p.id.startsWith("manual-")) continue;
   const fc = byFounder[p.name] || [];
   p.companies = fc.map(c => ({ slug: c.slug, name: c.name }));
   const cats = fc.map(c => c.category).filter(x => x !== "other");
   p.category = cats[0] || (cat(p.description + " " + p.owns.join(" ") + " " + p.summary.slice(0, 300)));
   p.age = null;
 }
-for (const c of C) c.founderLinks = c.founders.map(n => { const p = P.find(x => x.name === n); return { name: n, slug: p?.slug || null }; });
+for (const c of C) if (!c.id.startsWith("manual-")) c.founderLinks = c.founders.map(n => { const p = P.find(x => x.name === n); return { name: n, slug: p?.slug || null }; });
 const EN = { tech: "Technology & Software", finance: "Finance & Banking", energy: "Energy, Oil & Gas", pharma: "Healthcare & Pharma", auto: "Automotive & Transport", food: "Food, Beverage & FMCG", retail: "Retail & E-commerce", fashion: "Apparel, Luxury & Goods", media: "Media & Entertainment", telecom: "Telecommunications", realty: "Real Estate & Construction", travel: "Travel & Services", other: "Other" };
 const catList = [...CATS.map(([id, name]) => ({ id, name, nameEn: EN[id] })), { id: OTHER[0], name: OTHER[1], nameEn: EN.other }];
 for (const k of catList) { k.companies = C.filter(c => c.category === k.id).length; k.people = P.filter(p => p.category === k.id).length; }

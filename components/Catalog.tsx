@@ -7,7 +7,7 @@ export type Item = { slug: string; name: string; cat: string; img: string | null
 export type Cat = { id: string; name: string; count: number };
 export type Labels = { sphere: string; allSpheres: string; all: string; index: string; catalog: string; empty: string; columns: string[]; placeholder: string; noun: [string, string, string]; nameCol: string };
 
-const first = (n: string) => { const c = n.trim()[0]?.toUpperCase() || "#"; return /[\p{L}]/u.test(c) ? c : "#"; };
+const first = (n: string) => { let c = n.trim()[0]?.toUpperCase() || "#"; if (/\p{Script=Latin}/u.test(c)) c = c.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); return /\p{L}/u.test(c) ? c : "#"; };
 const rank = (l: string, loc: Locale) => (l === "#" ? 3 : /[A-Z]/.test(l) ? (loc === "ru" ? 2 : 1) : /[А-ЯЁ]/.test(l) ? (loc === "ru" ? 1 : 2) : 3);
 const cmp = (loc: Locale) => (a: string, b: string) => rank(a, loc) - rank(b, loc) || a.localeCompare(b, loc);
 

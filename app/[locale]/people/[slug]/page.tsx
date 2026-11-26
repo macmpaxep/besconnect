@@ -37,9 +37,10 @@ export default async function Page({ params }: P) {
           <div className="read">{paras.map((x, i) => /^=+\s.*\s=+$/.test(x) ? <h3 key={i}>{x.replace(/=+/g, "").trim()}</h3> : <p key={i}>{x}</p>)}</div>
         </section>
         {p.companies.length > 0 && <section className="sect"><h2 className="h2">{d.companiesOf}</h2>
-          <table className="rel"><tbody>{p.companies.map(c => <tr key={c.slug}><td><Link href={`/${locale}/companies/${c.slug}`}>{c.name}</Link></td><td>{d.founder}</td></tr>)}</tbody></table></section>}
+          <table className="rel"><tbody>{p.companies.map(c => <tr key={c.slug}><td><Link href={`/${locale}/companies/${c.slug}`}>{c.name}</Link></td><td>{c.role ? c.role[locale] : d.founder}</td></tr>)}</tbody></table></section>}
         {(occ.length + aw.length + wk.length > 0) && <section className="sect"><h2 className="h2">{d.activity}</h2>
           <Group title={d.occupations} items={occ} /><Group title={d.awards} items={aw} /><Group title={d.works} items={wk} /></section>}
+        {p.source && <p className="meta">{d.sourceLabel} <a href={p.source.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "underline" }}>{p.source.name}</a></p>}
         {p.wikipedia && <p className="meta">{d.sources} <a href={p.wikipedia} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "underline" }}>Wikipedia</a> (CC BY-SA), Wikidata.</p>}
       </div>
       <aside><div className="panel"><h2>{d.facts}</h2><dl className="facts">{rows.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl></div></aside>

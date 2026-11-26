@@ -1,0 +1,80 @@
+[
+  {
+    "id": "manual-ozgerim-holding",
+    "slug": "ozgerim-holding",
+    "name": "Özgerim Holding",
+    "nameRu": "Özgerim Holding",
+    "description": "Investment holding: hedge funds, venture capital, real estate, construction, charity and publishing",
+    "descriptionRu": "Инвестиционный холдинг: фонды, недвижимость, строительство",
+    "website": "https://ozgerim-2.vercel.app",
+    "country": "Kazakhstan",
+    "countryRu": "Казахстан",
+    "hq": "Almaty / London",
+    "hqRu": "Алматы / Лондон",
+    "founded": null,
+    "employees": null,
+    "revenue": null,
+    "industries": [
+      "investment holding",
+      "hedge funds",
+      "venture capital",
+      "real estate",
+      "construction",
+      "publishing"
+    ],
+    "industriesRu": [
+      "инвестиционный холдинг",
+      "хедж-фонды",
+      "венчурные инвестиции",
+      "недвижимость",
+      "строительство",
+      "издательская деятельность"
+    ],
+    "founders": [],
+    "founderLinks": [],
+    "ceo": "Aibar Abilov",
+    "ceoRu": "Айбар Абилов",
+    "ceoSlug": "aibar-abilov",
+    "parent": null,
+    "parentRu": null,
+    "products": [],
+    "subsidiaries": [],
+    "brands": [],
+    "logo": null,
+    "wikipedia": null,
+    "thumb": null,
+    "category": "finance",
+    "extract": "Özgerim Holding is an investment holding with offices in Almaty and London. It brings together six lines of business: hedge funds, venture investment, real estate investment, construction, charity and book publishing. According to the company, it has delivered more than 20 projects, built 1.2 million square metres, sold more than 50,000 books, helped more than 5,000 people and holds nine properties in its portfolio. The holding is led by Aibar Abilov.",
+    "extractRu": "Özgerim Holding — инвестиционный холдинг с офисами в Алматы и Лондоне. Холдинг объединяет шесть направлений: хедж-фонды, венчурные инвестиции, инвестиции в недвижимость, строительство, благотворительность и издание книг. По данным компании, реализовано более 20 проектов, построено 1,2 млн квадратных метров, продано более 50 000 книг, помощь получили более 5 000 человек, в портфеле девять объектов недвижимости. Холдингом руководит Айбар Абилов.",
+    "projects": {
+      "en": [
+        "Özgerim Alpha Fund: multi-strategy fund, London, 2019. Average annual return +14%",
+        "Global Macro Fund: global macro fund, Dubai, 2021. Assets under management $120 million",
+        "Özgerim Plaza: class A business centre, Almaty, 2018. 42,000 m²",
+        "Riverside Residence: residential complex, Astana, 2020. 480 apartments",
+        "Altyn Orda residential complex: Almaty, 2019. 24 floors",
+        "“Sever” logistics hub: industrial facility, Karaganda, 2021. 30,000 m² of warehouse space",
+        "“Özgerim Scholars” scholarship: educational programme, 2020. 250+ scholars",
+        "School in the region: social construction, Turkestan, 2023. 1,200 pupils",
+        "“Tetrad v kletku” (“Squared Notebook”): business book by A. Abilov and K. Abilov",
+        "“Business Library” series: book series, 2022. 6 volumes"
+      ],
+      "ru": [
+        "Özgerim Alpha Fund: мультистратегический фонд, Лондон, 2019. Среднегодовая доходность +14%",
+        "Global Macro Fund: глобальный макро-фонд, Дубай, 2021. Активы под управлением $120 млн",
+        "Özgerim Plaza: бизнес-центр класса A, Алматы, 2018. 42 000 м²",
+        "Riverside Residence: жилой комплекс, Астана, 2020. 480 квартир",
+        "ЖК «Алтын Орда»: жилой комплекс, Алматы, 2019. 24 этажа",
+        "Логистический хаб «Север»: промышленный объект, Караганда, 2021. 30 000 м² складских площадей",
+        "Стипендия «Özgerim Scholars»: образовательная программа, 2020. 250+ стипендиатов",
+        "Школа в регионе: социальное строительство, Туркестан, 2023. 1 200 учеников",
+        "«Тетрадь в клетку»: бизнес-книга, А. Абилов и К. Абилов",
+        "Серия «Деловая библиотека»: книжная серия, 2022. 6 томов"
+      ]
+    },
+    "source": {
+      "name": "ozgerim-2.vercel.app",
+      "url": "https://ozgerim-2.vercel.app"
+    }
+  }
+]
