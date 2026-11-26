@@ -7,29 +7,39 @@ export const dynamicParams = false;
 export const generateStaticParams = () => getPeople().map(p => ({ slug: p.slug }));
 type P = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: P): Promise<Metadata> {
-  const { slug } = await params; const p = getPeople().find(x => x.slug === slug); return { title: p?.name, description: p?.description };
+  const { slug } = await params; const p = getPeople().find(x => x.slug === slug);
+  return { title: p?.name, description: p?.description };
 }
-const Block = ({ title, items }: { title: string; items: string[] }) => items.length ? (<><h3>{title}</h3><ul className="list">{items.map(i => <li key={i}>{i}</li>)}</ul></>) : null;
+const Group = ({ title, items }: { title: string; items: string[] }) => items.length ? (<><div className="plist-h">{title}</div><ul className="plist">{items.map(i => <li key={i}>{i}</li>)}</ul></>) : null;
 
 export default async function Page({ params }: P) {
   const { slug } = await params; const p = getPeople().find(x => x.slug === slug); if (!p) notFound();
-  const paras = p.bio.split(/\n{2,}|\n/).map(s => s.trim()).filter(Boolean).filter(s => !/^=+\s.*\s=+$/.test(s) || true);
+  const paras = p.bio.split(/\n+/).map(s => s.trim()).filter(Boolean).slice(0, 60);
+  const rows: [string, React.ReactNode][] = ([
+    ["Родился", p.birth ? fmtDate(p.birth) : null], ["Умер", p.death ? fmtDate(p.death) : null],
+    ["Место рождения", p.birthplace], ["Гражданство", p.citizenship.join(", ") || null],
+    ["Образование", p.education.slice(0, 3).join(", ") || null],
+    ["Сфера", catName(p.category)],
+  ] as [string, React.ReactNode][]).filter(([, v]) => v);
   return (<>
-    <div className="crumbs"><Link href="/people">Предприниматели</Link> / {catName(p.category)}</div>
-    <div className="hero">
-      <div className="ava round" style={{ width: 120, height: 120 }}>{p.photo ? <img className="cover" src={p.photo} alt={p.name} /> : p.name[0]}</div>
-      <div><h1 style={{ margin: 0 }}>{p.name}</h1>{p.nameRu && p.nameRu !== p.name && <div className="lead" style={{ margin: 0 }}>{p.nameRu}</div>}
-        <p className="lead" style={{ margin: "4px 0" }}>{p.description}</p><span className="tag">{catName(p.category)}</span></div>
+    <nav className="crumb" aria-label="Навигация"><Link href="/people">Предприниматели</Link> / {catName(p.category)}</nav>
+    <div className="head">
+      <span className="mark round">{p.photo ? <img src={p.photo} alt="" /> : p.name[0]}</span>
+      <div><h1>{p.name}</h1><p>{p.nameRu && p.nameRu !== p.name ? p.nameRu + " · " : ""}{p.description}</p></div>
     </div>
-    <div className="facts">
-      {([["Родился", fmtDate(p.birth)], ["Умер", p.death ? fmtDate(p.death) : null], ["Место рождения", p.birthplace], ["Гражданство", p.citizenship.join(", ")]] as [string, string | null][])
-        .filter(([, v]) => v && v !== "—").map(([k, v]) => <div className="fact" key={k}><b>{k}</b>{v}</div>)}
+    <div className="detail">
+      <div>
+        <section className="sect"><h2 className="h2">Биография</h2>
+          <div className="read">{paras.map((t, i) => /^=+\s.*\s=+$/.test(t) ? <h3 key={i}>{t.replace(/=+/g, "").trim()}</h3> : <p key={i}>{t}</p>)}</div>
+        </section>
+        {p.companies.length > 0 && <section className="sect"><h2 className="h2">Компании</h2>
+          <table className="rel"><tbody>{p.companies.map(c => <tr key={c.slug}><td><Link href={`/companies/${c.slug}`}>{c.name}</Link></td><td>Основатель</td></tr>)}</tbody></table></section>}
+        {(p.awards.length + p.works.length + p.occupations.length > 0) && <section className="sect"><h2 className="h2">Деятельность и достижения</h2>
+          <Group title="Род деятельности" items={p.occupations} /><Group title="Награды" items={p.awards} /><Group title="Известные работы" items={p.works} /></section>}
+        {p.wikipedia && <p className="meta">Источники: <a href={p.wikipedia} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "underline" }}>Wikipedia</a> (CC BY-SA), Wikidata.</p>}
+      </div>
+      <aside><div className="panel"><h2>Краткие сведения</h2>
+        <dl className="facts">{rows.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl></div></aside>
     </div>
-    <h2>Биография</h2>
-    <div className="bio">{paras.slice(0, 40).map((t, i) => /^=+\s/.test(t) ? <h3 key={i}>{t.replace(/=+/g, "").trim()}</h3> : <p key={i}>{t}</p>)}</div>
-    {p.companies.length > 0 && (<><h2>Компании</h2><ul className="list">{p.companies.map(c => <li key={c.slug}><Link href={`/companies/${c.slug}`}>{c.name}</Link></li>)}</ul></>)}
-    <Block title="Род деятельности" items={p.occupations} /><Block title="Образование" items={p.education} />
-    <Block title="Награды" items={p.awards} /><Block title="Известные работы" items={p.works} />
-    {p.wikipedia && <p className="lead" style={{ marginTop: 24 }}>Источники: <a href={p.wikipedia} target="_blank" rel="noopener noreferrer">Wikipedia</a> (CC BY-SA), Wikidata.</p>}
   </>);
 }

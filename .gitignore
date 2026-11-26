@@ -8,3 +8,5 @@ data/*.raw.json
 data/ids.json
 data/cache
 data/details.log
+.env*.local
+.env

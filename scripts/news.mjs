@@ -13,11 +13,11 @@ const feeds = [
   ["Financial Times", "https://www.ft.com/world?format=rss"],
   ["Forbes", "https://www.forbes.com/business/feed/"],
   ["The Economic Times", "https://economictimes.indiatimes.com/rssfeedstopstories.cms"],
-  ["Al Jazeera", "https://www.aljazeera.com/xml/rss/all.xml"],
 ];
 const dec = s => (s || "").replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1").replace(/<[^>]+>/g, " ")
   .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#0?39;|&apos;/g, "'").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
 const tag = (x, t) => (x.match(new RegExp(`<${t}[^>]*>([\\s\\S]*?)</${t}>`)) || [])[1];
+const OFFTOPIC = /\b(NFL|NBA|MLB|NHL|MLS|UFC|FIFA|baseball|basketball|football|soccer|quarterback|slugger|pitcher|Super Bowl|World Series|Premier League|Champions League|Wimbledon|Olympic|Grammy|Oscar|Emmy|Kardashian|Taylor Swift|celebrity|horoscope|recipe|royal family|Prince Harry|Meghan|dating|wedding)\b/i;
 const items = [], seen = new Set();
 for (const [source, url] of feeds) {
   try {
@@ -27,6 +27,7 @@ for (const [source, url] of feeds) {
       if (!link) link = (x.match(/<link[^>]*href="([^"]+)"/) || [])[1]; 
       const d = new Date(dec(tag(x, "pubDate")));
       if (!title || !link || seen.has(link) || seen.has(title) || isNaN(d)) continue;
+      if (OFFTOPIC.test(title + " " + dec(tag(x, "description")))) continue;
       seen.add(link); seen.add(title);
       let summary = dec(tag(x, "description")); if (summary.length > 260) summary = summary.slice(0, 257).replace(/\s+\S*$/, "") + "…";
       const image = (x.match(/<media:(?:thumbnail|content)[^>]+url="([^"]+)"/) || x.match(/<enclosure[^>]+url="([^"]+)"/) || [])[1] || null;

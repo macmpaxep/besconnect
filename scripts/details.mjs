@@ -1,6 +1,6 @@
 import { getJSON, sleep } from "./lib.mjs";
 import fs from "fs";
-const ALL = JSON.parse(fs.readFileSync("../data/ids.json")); const companies = ALL.companies, people = ALL.people.slice(0, 640);
+const ALL = JSON.parse(fs.readFileSync("../data/ids.json")); const companies = ALL.companies, people = ALL.people.slice(0, 900);
 const chunk = (a, n) => Array.from({ length: Math.ceil(a.length / n) }, (_, i) => a.slice(i * n, i * n + n));
 const W = "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&languages=en|ru&languagefallback=1&origin=*";
 async function pool(items, fn, n = 12) {
@@ -19,6 +19,10 @@ async function entities(ids, props, label = "", size = 20) {
 }
 const claims = (e, p) => (e.claims?.[p] || []).map(s => s.mainsnak?.datavalue?.value).filter(v => v != null);
 const ids = (e, p) => claims(e, p).map(v => v.id).filter(Boolean);
+
+// current value: skip ended statements (P582), deprecated rank, language-specific (P407); prefer "preferred" rank
+const cur = (e, p) => (e.claims?.[p] || []).filter(s => s.rank !== "deprecated" && !s.qualifiers?.P582 && !s.qualifiers?.P407 && s.mainsnak?.datavalue)
+  .sort((a, b) => (b.rank === "preferred") - (a.rank === "preferred"));
 const str = (e, p) => claims(e, p).find(v => typeof v === "string");
 const time = (e, p) => { const v = claims(e, p)[0]; return v?.time ? v.time.replace(/^\+/, "").slice(0, 10).replace(/-00/g, "-01") : null; };
 const amount = (e, p) => { const v = claims(e, p).slice(-1)[0]; return v?.amount ? Number(v.amount) : null; };
@@ -50,9 +54,11 @@ async function fullBio(title) {
 let cn = 0, pn = 0;
 const outC = (await pool(companies.filter(i => ce[i]), async id => {
   const e = ce[id]; const t = e.sitelinks?.enwiki?.title; const w = await wiki(t); if (++cn % 50 === 0) console.log("company pages", cn);
-  return { id, name: lab(e), nameRu: labRu(e), description: e.descriptions?.en?.value || "", website: str(e, "P856") || null,
+  return { id, name: lab(e), nameRu: labRu(e), description: e.descriptions?.en?.value || "", website: (() => { const c = (e.claims?.P856 || []).filter(s => s.rank !== "deprecated" && !s.qualifiers?.P582 && s.mainsnak?.datavalue)
+      .map(s => ({ u: s.mainsnak.datavalue.value, j: !!s.qualifiers?.P1001, pref: s.rank === "preferred" }))
+      .sort((a, b) => (b.pref - a.pref) || (a.j - b.j) || (a.u.length - b.u.length)); return c[0]?.u || null; })(),
     country: Ls(e, "P17", 1)[0] || null, hq: Ls(e, "P159", 1)[0] || null, founded: time(e, "P571"), employees: amount(e, "P1128"), revenue: amount(e, "P2139"),
-    industries: Ls(e, "P452", 6), founders: Ls(e, "P112", 6), ceo: Ls(e, "P169", 1)[0] || null, parent: Ls(e, "P749", 1)[0] || null,
+    industries: Ls(e, "P452", 6), founders: Ls(e, "P112", 6), ceo: (() => { const s = cur(e, "P169")[0]; return s ? L(s.mainsnak.datavalue.value.id) : null; })(), parent: Ls(e, "P749", 1)[0] || null,
     products: Ls(e, "P1056", 15), subsidiaries: Ls(e, "P355", 15), brands: Ls(e, "P1830", 15),
     logo: logo(str(e, "P154")), wikipedia: w?.url || null, extract: w?.extract || "", thumb: w?.thumb || null, wikiTitle: t || null };
 })).filter(c => c.name && c.extract);

@@ -23,6 +23,8 @@ export const getPeople = () => (cache.p ||= read<Person[]>("people.json"));
 export const getNews = () => (cache.n ||= read<News[]>("news.json"));
 export const getCategories = () => (cache.k ||= read<Category[]>("categories.json"));
 export const catName = (id: string) => getCategories().find(c => c.id === id)?.name ?? "Прочее";
-export const fmtDate = (d: string | null) => (d ? new Date(d).toLocaleDateString("ru-RU", { year: "numeric", month: "long", day: "numeric" }) : "—");
+export const fmtDate = (d: string | null) => (d ? new Date(d).toLocaleDateString("ru-RU", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" }) : "—");
 export const fmtYear = (d: string | null) => (d ? d.slice(0, 4) : "—");
-export const fmtMoney = (n: number | null) => (n == null ? "—" : n >= 1e9 ? (n / 1e9).toFixed(1) + " млрд" : n >= 1e6 ? (n / 1e6).toFixed(1) + " млн" : String(n));
+export const fmtMoney = (n: number | null) => (n == null ? "—" : n >= 1e9 ? (n / 1e9).toFixed(1).replace(".", ",") + " млрд" : n >= 1e6 ? (n / 1e6).toFixed(1).replace(".", ",") + " млн" : String(n));
+
+export const fmtNum = (n: number | null) => (n == null ? "—" : n.toLocaleString("ru-RU"));

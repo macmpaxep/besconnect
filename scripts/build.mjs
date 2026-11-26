@@ -22,9 +22,13 @@ const slug = (s, used) => { let b = s.normalize("NFKD").replace(/[̀-ͯ]/g, "").
 const uc = new Set(), up = new Set();
 const seenName = new Set();
 let C = companies.filter(c => !seenName.has(c.name) && seenName.add(c.name));
-C.forEach(c => { c.slug = slug(c.name, uc); c.category = cat(c.industries.join(" ") + " " + c.description) !== "other" ? cat(c.industries.join(" ") + " " + c.description) : cat(c.extract.slice(0, 300)); });
+const named = a => a.filter(x => x !== x.toLowerCase());
+C.forEach(c => { c.products = named(c.products); c.brands = named(c.brands); c.subsidiaries = named(c.subsidiaries); c.slug = slug(c.name, uc); c.category = cat(c.industries.join(" ") + " " + c.description) !== "other" ? cat(c.industries.join(" ") + " " + c.description) : cat(c.extract.slice(0, 300)); });
 const seenP = new Set();
 let P = people.filter(p => !seenP.has(p.name) && seenP.add(p.name));
+const OUT = /politician|president|prime minister|minister|senator|governor|rapper|singer|actor|actress|musician|footballer|athlete|comedian|composer|television host|model\b/i;
+const BIZ = /business|entrepreneur|founder|executive|tycoon|industrialist|investor|billionaire|financier|banker|CEO|chairman|magnate|merchant|philanthrop|inventor/i;
+P = P.filter(p => !OUT.test(p.description) || BIZ.test(p.description));
 P.forEach(p => p.slug = slug(p.name, up));
 const byFounder = {};
 for (const c of C) for (const f of c.founders) (byFounder[f] ||= []).push(c);
