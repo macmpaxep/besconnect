@@ -38,6 +38,9 @@ for (const e of Object.values(ce)) for (const p of ["P452","P17","P159","P112","
 for (const e of Object.values(pe)) for (const p of ["P19","P27","P69","P106","P800","P166","P1830","P108"]) ids(e, p).slice(0, 8).forEach(i => refs.add(i));
 const le = await entities([...refs], "labels", "labels", 50);
 const L = i => le[i] ? lab(le[i]) : null;
+const LR = i => le[i] ? (labRu(le[i]) || lab(le[i])) : null;
+const LsR = (e, p, n = 12) => [...new Set(ids(e, p).map(LR).filter(Boolean))].slice(0, n);
+const ruDesc = e => (e.descriptions?.ru?.language === "ru" ? e.descriptions.ru.value : null);
 const Ls = (e, p, n = 12) => [...new Set(ids(e, p).map(L).filter(Boolean))].slice(0, n);
 
 async function wiki(title) {
@@ -58,7 +61,7 @@ const outC = (await pool(companies.filter(i => ce[i]), async id => {
       .map(s => ({ u: s.mainsnak.datavalue.value, j: !!s.qualifiers?.P1001, pref: s.rank === "preferred" }))
       .sort((a, b) => (b.pref - a.pref) || (a.j - b.j) || (a.u.length - b.u.length)); return c[0]?.u || null; })(),
     country: Ls(e, "P17", 1)[0] || null, hq: Ls(e, "P159", 1)[0] || null, founded: time(e, "P571"), employees: amount(e, "P1128"), revenue: amount(e, "P2139"),
-    industries: Ls(e, "P452", 6), founders: Ls(e, "P112", 6), ceo: (() => { const s = cur(e, "P169")[0]; return s ? L(s.mainsnak.datavalue.value.id) : null; })(), parent: Ls(e, "P749", 1)[0] || null,
+    industries: Ls(e, "P452", 6), countryRu: LsR(e, "P17", 1)[0] || null, hqRu: LsR(e, "P159", 1)[0] || null, industriesRu: LsR(e, "P452", 6), descriptionRu: ruDesc(e), founders: Ls(e, "P112", 6), ceo: (() => { const s = cur(e, "P169")[0]; return s ? L(s.mainsnak.datavalue.value.id) : null; })(), ceoRu: (() => { const s = cur(e, "P169")[0]; return s ? LR(s.mainsnak.datavalue.value.id) : null; })(), parentRu: LsR(e, "P749", 1)[0] || null, parent: Ls(e, "P749", 1)[0] || null,
     products: Ls(e, "P1056", 15), subsidiaries: Ls(e, "P355", 15), brands: Ls(e, "P1830", 15),
     logo: logo(str(e, "P154")), wikipedia: w?.url || null, extract: w?.extract || "", thumb: w?.thumb || null, wikiTitle: t || null };
 })).filter(c => c.name && c.extract);
@@ -67,7 +70,7 @@ const outP = (await pool(people.filter(i => pe[i]), async id => {
   const e = pe[id]; const t = e.sitelinks?.enwiki?.title; if (!t) return null;
   const w = await wiki(t); const bio = await fullBio(t); if (++pn % 50 === 0) console.log("people pages", pn);
   return { id, name: lab(e), nameRu: labRu(e), description: e.descriptions?.en?.value || "", birth: time(e, "P569"), death: time(e, "P570"),
-    birthplace: Ls(e, "P19", 1)[0] || null, citizenship: Ls(e, "P27", 2), education: Ls(e, "P69", 5), occupations: Ls(e, "P106", 8),
+    birthplace: Ls(e, "P19", 1)[0] || null, birthplaceRu: LsR(e, "P19", 1)[0] || null, citizenshipRu: LsR(e, "P27", 2), educationRu: LsR(e, "P69", 5), occupationsRu: LsR(e, "P106", 8), awardsRu: LsR(e, "P166", 8), worksRu: LsR(e, "P800", 8), descriptionRu: ruDesc(e), citizenship: Ls(e, "P27", 2), education: Ls(e, "P69", 5), occupations: Ls(e, "P106", 8),
     awards: Ls(e, "P166", 8), works: Ls(e, "P800", 8), owns: Ls(e, "P1830", 8),
     photo: logo(str(e, "P18")), wikipedia: w?.url || null, summary: w?.extract || "", bio: bio || w?.extract || "", wikiTitle: t };
 })).filter(p => p && p.name && p.summary);

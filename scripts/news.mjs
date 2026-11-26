@@ -1,5 +1,6 @@
 import { UA } from "./lib.mjs";
 import fs from "fs";
+import crypto from "crypto";
 const feeds = [
   ["BBC News", "https://feeds.bbci.co.uk/news/business/rss.xml"],
   ["CNBC", "https://www.cnbc.com/id/10001147/device/rss/rss.html"],
@@ -36,6 +37,6 @@ for (const [source, url] of feeds) {
   } catch (e) { console.error("fail", url, e.message); }
 }
 items.sort((a, b) => b.date.localeCompare(a.date));
-items.forEach((n, i) => n.id = String(i + 1));
+items.forEach(n => n.id = crypto.createHash("md5").update(n.link).digest("hex").slice(0, 10));
 fs.writeFileSync("../data/news.raw.json", JSON.stringify(items));
 console.log("news", items.length, "sources", new Set(items.map(i => i.source)).size);

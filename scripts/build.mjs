@@ -40,7 +40,8 @@ for (const p of P) {
   p.age = null;
 }
 for (const c of C) c.founderLinks = c.founders.map(n => { const p = P.find(x => x.name === n); return { name: n, slug: p?.slug || null }; });
-const catList = [...CATS.map(([id, name]) => ({ id, name })), { id: OTHER[0], name: OTHER[1] }];
+const EN = { tech: "Technology & Software", finance: "Finance & Banking", energy: "Energy, Oil & Gas", pharma: "Healthcare & Pharma", auto: "Automotive & Transport", food: "Food, Beverage & FMCG", retail: "Retail & E-commerce", fashion: "Apparel, Luxury & Goods", media: "Media & Entertainment", telecom: "Telecommunications", realty: "Real Estate & Construction", travel: "Travel & Services", other: "Other" };
+const catList = [...CATS.map(([id, name]) => ({ id, name, nameEn: EN[id] })), { id: OTHER[0], name: OTHER[1], nameEn: EN.other }];
 for (const k of catList) { k.companies = C.filter(c => c.category === k.id).length; k.people = P.filter(p => p.category === k.id).length; }
 C.sort((a, b) => a.name.localeCompare(b.name)); P.sort((a, b) => a.name.localeCompare(b.name));
 fs.writeFileSync("../data/companies.json", JSON.stringify(C));

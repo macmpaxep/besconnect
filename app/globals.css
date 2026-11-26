@@ -164,3 +164,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 @media(prefers-reduced-motion:no-preference){
   a,button{transition:color .15s ease-out,background-color .15s ease-out,border-color .15s ease-out}
 }
+
+/* language switcher */
+.hdr-right{display:flex;align-items:center;gap:20px;height:100%}
+.lang{display:flex;gap:2px;font-size:12px;font-weight:600;letter-spacing:.04em}
+.lang a{padding:5px 8px;border-radius:4px;color:var(--ink3)}
+.lang a:hover{background:var(--tint);color:var(--ink)}
+.lang a[aria-current=true]{background:var(--ink);color:var(--paper)}
+.callout{margin:28px 0 0;padding:14px 16px;background:var(--tint);border-radius:6px;color:var(--ink2);font-size:14px;line-height:1.5;max-width:64ch}
+.btn{display:inline-flex;align-items:center;height:46px;padding:0 22px;background:var(--ink);color:var(--paper);border-radius:8px;font-weight:600;font-size:15px}
+.btn:hover{background:var(--accent);color:#fff}
+.orig{color:var(--ink3);font-size:14px;margin:6px 0 0}

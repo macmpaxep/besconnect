@@ -10,3 +10,5 @@ data/cache
 data/details.log
 .env*.local
 .env
+data/translations/run*.log
+data/pilot

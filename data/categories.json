@@ -2,78 +2,91 @@
  {
   "id": "tech",
   "name": "Технологии и ПО",
+  "nameEn": "Technology & Software",
   "companies": 139,
   "people": 93
  },
  {
   "id": "finance",
   "name": "Финансы и банки",
+  "nameEn": "Finance & Banking",
   "companies": 41,
   "people": 54
  },
  {
   "id": "energy",
   "name": "Энергетика, нефть и газ",
+  "nameEn": "Energy, Oil & Gas",
   "companies": 27,
   "people": 24
  },
  {
   "id": "pharma",
   "name": "Здравоохранение и фарма",
+  "nameEn": "Healthcare & Pharma",
   "companies": 15,
   "people": 9
  },
  {
   "id": "auto",
   "name": "Автомобили и транспорт",
+  "nameEn": "Automotive & Transport",
   "companies": 140,
   "people": 42
  },
  {
   "id": "food",
   "name": "Еда, напитки и FMCG",
+  "nameEn": "Food, Beverage & FMCG",
   "companies": 28,
   "people": 15
  },
  {
   "id": "retail",
   "name": "Ритейл и e-commerce",
+  "nameEn": "Retail & E-commerce",
   "companies": 19,
   "people": 12
  },
  {
   "id": "fashion",
   "name": "Одежда, люкс и товары",
+  "nameEn": "Apparel, Luxury & Goods",
   "companies": 33,
   "people": 47
  },
  {
   "id": "media",
   "name": "Медиа и развлечения",
+  "nameEn": "Media & Entertainment",
   "companies": 47,
   "people": 43
  },
  {
   "id": "telecom",
   "name": "Телекоммуникации",
+  "nameEn": "Telecommunications",
   "companies": 7,
   "people": 5
  },
  {
   "id": "realty",
   "name": "Недвижимость и строительство",
+  "nameEn": "Real Estate & Construction",
   "companies": 22,
   "people": 39
  },
  {
   "id": "travel",
   "name": "Туризм и сервис",
+  "nameEn": "Travel & Services",
   "companies": 3,
   "people": 12
  },
  {
   "id": "other",
   "name": "Прочее",
+  "nameEn": "Other",
   "companies": 11,
   "people": 191
  }
