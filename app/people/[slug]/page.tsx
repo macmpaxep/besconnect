@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getPeople, catName, fmtDate } from "@/lib/data";
+import { getPeople, catName, fmtDate } from "../../../lib/data";
 
 export const dynamicParams = false;
 export const generateStaticParams = () => getPeople().map(p => ({ slug: p.slug }));

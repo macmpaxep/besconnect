@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getCompanies, catName, fmtYear, fmtMoney } from "@/lib/data";
+import { getCompanies, catName, fmtYear, fmtMoney } from "../../../lib/data";
 
 export const dynamicParams = false;
 export const generateStaticParams = () => getCompanies().map(c => ({ slug: c.slug }));

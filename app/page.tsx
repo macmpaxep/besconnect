@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getCompanies, getPeople, getNews, getCategories } from "@/lib/data";
+import { getCompanies, getPeople, getNews, getCategories } from "../lib/data";
 
 export default function Home() {
   const C = getCompanies(), P = getPeople(), N = getNews(), K = getCategories();

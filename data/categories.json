@@ -1,0 +1,80 @@
+[
+ {
+  "id": "tech",
+  "name": "Технологии и ПО",
+  "companies": 139,
+  "people": 71
+ },
+ {
+  "id": "finance",
+  "name": "Финансы и банки",
+  "companies": 41,
+  "people": 42
+ },
+ {
+  "id": "energy",
+  "name": "Энергетика, нефть и газ",
+  "companies": 27,
+  "people": 26
+ },
+ {
+  "id": "pharma",
+  "name": "Здравоохранение и фарма",
+  "companies": 15,
+  "people": 7
+ },
+ {
+  "id": "auto",
+  "name": "Автомобили и транспорт",
+  "companies": 140,
+  "people": 26
+ },
+ {
+  "id": "food",
+  "name": "Еда, напитки и FMCG",
+  "companies": 28,
+  "people": 8
+ },
+ {
+  "id": "retail",
+  "name": "Ритейл и e-commerce",
+  "companies": 19,
+  "people": 9
+ },
+ {
+  "id": "fashion",
+  "name": "Одежда, люкс и товары",
+  "companies": 33,
+  "people": 44
+ },
+ {
+  "id": "media",
+  "name": "Медиа и развлечения",
+  "companies": 47,
+  "people": 97
+ },
+ {
+  "id": "telecom",
+  "name": "Телекоммуникации",
+  "companies": 7,
+  "people": 4
+ },
+ {
+  "id": "realty",
+  "name": "Недвижимость и строительство",
+  "companies": 22,
+  "people": 33
+ },
+ {
+  "id": "travel",
+  "name": "Туризм и сервис",
+  "companies": 3,
+  "people": 10
+ },
+ {
+  "id": "other",
+  "name": "Прочее",
+  "companies": 11,
+  "people": 262
+ }
+]

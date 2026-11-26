@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Catalog from "@/components/Catalog";
-import { getPeople, getCategories } from "@/lib/data";
+import Catalog from "../../components/Catalog";
+import { getPeople, getCategories } from "../../lib/data";
 export const metadata: Metadata = { title: "Предприниматели" };
 export default function Page() {
   const P = getPeople(), K = getCategories();

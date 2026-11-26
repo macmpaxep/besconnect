@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import type { News } from "@/lib/data";
+import type { News } from "../lib/data";
 
 export default function NewsList({ news, sources }: { news: News[]; sources: string[] }) {
   const [src, setSrc] = useState("all"); const [n, setN] = useState(30); const [q, setQ] = useState("");
