@@ -48,7 +48,7 @@ export const cHq = (c: Company, l: Locale) => (ru(l) ? c.hqRu || c.hq : c.hq);
 export const pCountry = (p: Person, l: Locale) => (ru(l) ? p.citizenshipRu[0] || p.citizenship[0] : p.citizenship[0]) || null;
 export const pList = (p: Person, key: "citizenship" | "education" | "occupations" | "awards" | "works", l: Locale) => (ru(l) && p[`${key}Ru` as const].length ? p[`${key}Ru` as const] : p[key]);
 export const pBirthplace = (p: Person, l: Locale) => (ru(l) ? p.birthplaceRu || p.birthplace : p.birthplace);
-const METAISH = /\b(headline|snippet)\b|заголов|анонс|сниппет/i;
+const METAISH = /\b(headline|snippet)\b|заголов|анонс|сниппет|предоставленн|не раскрыва|не уточня|не сообща|в тексте не|not (disclosed|specified|provided)|provided text|given text|no (further )?details/i;
 export const newsView = (n: News, l: Locale) => {
   const t = getRu().news[n.id];
   if (ru(l)) {

@@ -149,7 +149,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 @media(max-width:1100px){.tbl th:nth-child(5),.tbl td:nth-child(5){display:none}}
 @media(max-width:900px){
   .page{padding:0 20px}
-  .cat,.detail,.front,.duo,.cols2{grid-template-columns:1fr;gap:36px}
+  .cat,.detail,.front,.duo,.cols2{grid-template-columns:minmax(0,1fr);gap:36px}
   .side{display:none}.sel{display:block}
   .hide-m{display:none}
   .plist{columns:1}
@@ -175,3 +175,27 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .btn{display:inline-flex;align-items:center;height:46px;padding:0 22px;background:var(--ink);color:var(--paper);border-radius:8px;font-weight:600;font-size:15px}
 .btn:hover{background:var(--accent);color:#fff}
 .orig{color:var(--ink3);font-size:14px;margin:6px 0 0}
+
+/* mobile header: logo, language switcher and a menu button; the links live in a dropdown panel */
+.burger{display:none;align-items:center;justify-content:center;width:44px;height:44px;margin-right:-10px;border:0;background:none;color:var(--ink);border-radius:8px;cursor:pointer}
+.burger:hover{background:var(--tint)}
+@media(max-width:900px){
+  .hdr-in{gap:8px}
+  .hdr-right{gap:6px}
+  .logo{font-size:20px}
+  .lang a{padding:9px 10px}
+  .burger{display:flex}
+  .nav{position:absolute;left:0;right:0;top:100%;display:none;flex-direction:column;height:auto;gap:0;overflow:visible;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:0 16px 28px rgba(28,27,25,.08)}
+  .nav[data-open=true]{display:flex}
+  .nav a{height:56px;padding:0 20px;font-size:17px;white-space:normal;border-top:1px solid var(--line)}
+  .nav a[aria-current=page]{font-weight:600}
+  .nav a[aria-current=page]::after{display:none}
+  .tbl{table-layout:fixed}
+  .tbl th:first-child,.tbl td:first-child{width:58%}
+  .tbl th:nth-child(2),.tbl td:nth-child(2){width:42%}
+  .who{min-width:0}.who a{min-width:0;overflow-wrap:anywhere}
+  .clip{max-width:none;overflow-wrap:anywhere}
+  .tbl td:nth-child(3){min-width:0}
+  .tbl td{padding:10px 8px;font-size:14px}.tbl th{padding-left:8px;padding-right:8px}
+  .clip{overflow-wrap:break-word}
+}
